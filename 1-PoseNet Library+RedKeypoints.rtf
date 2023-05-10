@@ -1,0 +1,74 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 JAVA\
+\'97\'97\
+\
+let video;\
+let poseNet;\
+\
+function setup() \{\
+  createCanvas(640, 480);\
+  video = createCapture(VIDEO); \
+  video.hide();\
+  poseNet = ml5.poseNet(video, modelReady);\
+  poseNet.on('pose', gotPoses);\
+\}\
+\
+function drawKeypoints(keypoints) \{\
+  // your code to draw keypoints goes here\
+  for (let i = 0; i < keypoints.length; i++) \{\
+    let keypoint = keypoints[i];\
+    if (keypoint.score > 0.2) \{\
+      fill(255, 0, 0);\
+      noStroke();\
+      ellipse(keypoint.position.x, keypoint.position.y, 10, 10);\
+    \}\
+  \}\
+\}\
+\
+function gotPoses(poses) \{\
+  if (poses.length > 0) \{\
+    let pose = poses[0].pose;\
+    drawKeypoints(pose.keypoints);\
+  \}\
+\}\
+\
+function modelReady() \{\
+  console.log('model ready');  \
+\}\
+\
+function draw() \{\
+  background(220);\
+  image(video, 0, 0);\
+  //filter(GRAY);\
+\}\
+\
+\
+\
+\
+\
+HTML\
+\'97\'97\'97\
+<!DOCTYPE html>\
+<html lang="en">\
+  <head>\
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>\
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>\
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>\
+    <link rel="stylesheet" type="text/css" href="style.css">\
+    <meta charset="utf-8" />\
+  </head>\
+  <body>\
+    <main>\
+    </main>\
+    <script src="sketch.js"></script>\
+  </body>\
+</html>\
+\
+\
+}
